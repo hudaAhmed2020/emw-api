@@ -1,0 +1,262 @@
+﻿<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+<title></title>
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="viewport" content="width=device-width, minimum-scale=1.0" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+   <link type="text/css" rel="stylesheet" href="./css/aristo/jquery-ui-1.8.16.custom.css" />
+   <link type="text/css" rel="stylesheet" href="./css/jquery.layout.css" />
+   <link type="text/css" rel="stylesheet" href="./css/application.css" />
+
+    <script src="./lib/jquery.js"></script>
+    <script src="./lib/jquery-ui.js"></script>
+    <script src="./lib/jquery.browser.js"></script>
+    <script src="./lib/jquery.layout.js"></script>
+
+    <script src="./lib/draw2d.js"></script>
+
+    <script src="./gui/Application.js"></script>
+	  <script src="./gui/View.js"></script>
+    <script src="./gui/Toolbar.js"></script>
+    <script src="./gui/HoverConnection.js"></script>
+
+    
+    <script src="./gui/testShape.js"></script>
+    <script src="./gui/addition.js"></script>
+    <script src="./gui/subtraction.js"></script>
+    <script src="./gui/multiplication.js"></script>
+    <script src="./gui/division.js"></script>
+
+    <script src="./gui/DecoratedInputPort.js"></script>
+    <script src="./gui/MarkerFigure.js"></script>
+    <script src="./gui/MarkerStateAFigure.js"></script>
+    <script src="./gui/MarkerStateBFigure.js"></script>
+
+    <script src="./gui/OR.js"></script>
+    <script src="./gui/AND.js"></script>
+    <script src="./gui/NOT.js"></script>
+    <script src="./gui/start.js"></script>
+    <script src="./gui/end.js"></script>
+    <script src="./gui/condition.js"></script>
+    <script src="./gui/DblClickCanvasPolicy.js"></script>
+    <script src="./gui/diamond.js"></script>
+   
+
+
+
+
+    
+
+
+
+ <script type="text/javascript">
+
+document.addEventListener("DOMContentLoaded",function () {
+
+     var app  = new example.Application();
+     app.view.installEditPolicy(  new draw2d.policy.connection.DragConnectionCreatePolicy({
+        createConnection: function(){
+            return new HoverConnection();
+        }
+      }));
+      app.view.installEditPolicy(new DblClickCanvasPolicy());
+});
+
+</script>
+<script>
+        var variableDic={}
+        var resultsDic={}
+        var count=1;
+       function saveDic(name,value) 
+       {
+         variableDic[name]=value
+         console.log(value)
+         document.getElementById("variables").append(name)
+         //document.getElementById("variables")
+
+
+       }
+       function clearr()
+       {
+
+        document.getElementById('name').value=''
+         document.getElementById('value').value=''
+       }
+       function Search(name)
+       {
+         var temp= variableDic[name]
+         document.getElementById("valueLabel").hidden=false
+         document.getElementById("valueS").hidden=false
+         document.getElementById("valueS").value=temp;
+       }
+
+       function add(name)
+       {
+         var x =document.getElementById("variables")
+         var option=document.createElement("option")
+         option.text=name
+         x.append(option)
+         
+         
+       }
+      
+
+       function returnValue(name)
+       {
+         //console.log(variableDic[name])
+         return variableDic[name]
+       }
+       function saveRes(res)
+       {
+         var temp="result"+count
+         variableDic[temp]=res
+         var x =document.getElementById("variables")
+         var option=document.createElement("option")
+         option.text=temp
+         x.append(option)
+         console.log(count)
+         console.log(temp)
+         console.log(res)
+         count++
+       }
+       function getSuccess(data)
+            {
+              console.log("GET SUCCESS")
+
+              console.log(data)
+              var type = data.type
+              var figure = eval("new "+type+"();");
+              //customCanvas.add(figure,data.x,data.y);
+              var command = new draw2d.command.CommandAdd(this, figure, 100, 100);
+
+              customCanvas.getCommandStack().execute(command);
+
+            }
+
+       function draw(){
+
+                var start = myfigure.cssClass
+        var end   = myfigure.outputPorts.data[0].connections.data[0].targetPort.cssClass
+
+        // ...add it to the canvas 
+        canvas.add( start, myfigure.x,myfigure.y);
+        canvas.add( end, myfigure.outputPorts.data[0].connections.data[0].targetPort.x,myfigure.outputPorts.data[0].connections.data[0].targetPort.y);
+
+        // Create a Connection and connect the Start and End node
+        //
+        var c = new draw2d.Connection();
+
+        // Set the endpoint decorations for the connection
+        //
+        c.setSourceDecorator(new draw2d.decoration.connection.BarDecorator());
+        c.setTargetDecorator(new draw2d.decoration.connection.DiamondDecorator());   
+        // Connect the endpoints with the start and end port
+        //
+        c.setSource(start.getOutputPort(0));
+        c.setTarget(end.getInputPort(0));
+
+        // and finally add the connection to the canvas
+        canvas.add(c);
+
+       
+        // create a command for the undo/redo support
+        //var command = new draw2d.command.CommandAdd(this, figure, 100, 100);
+        //customCanvas.getCommandStack().execute(command);
+        
+
+       }
+
+        
+      </script>
+
+</head>
+
+<body id="container">
+
+   <div id="content">
+   		<div id="toolbar"></div>
+   		<div id="canvas" class="" style="width:3000px; height:3000px;"></div>
+   </div>
+
+   <div  id="navigation" >
+      <label hidden="true" id="var1Label">Variable1 </label>
+      <input  hidden ="true " id="var1text"  type="text" list="variables" oninput="returnValue(document.getElementById('var1text').value)" />
+      <datalist id="variables" >     
+      </datalist>
+    
+      <label hidden="true" id="var2Label">Variable2: </label>
+      <input  hidden ="true " id="var2text"  type="text" list="variables" oninput="returnValue(document.getElementById('var2text').value)" />
+      <datalist id="variables" >
+      </datalist>
+
+      <br><label hidden="true" id="resLabel">Result: </label>
+      <input type="text"id="resultIn" hidden="true" > <br> <br> 
+      <button type="button" class="button" id="resultBut" hidden="true" onclick="myOperation(returnValue(document.getElementById('var1text').value),returnValue( document.getElementById('var2text').value),document.getElementById('var1text').value,document.getElementById('var2text').value),saveRes(document.getElementById('resultIn').value)">Result</button>
+
+      <label hidden="true" id="CondLabel">Variables: </label>
+      <input type="text"id="conditionIn" hidden="true" list="variables" oninput="returnValue(document.getElementById('var1text').value)"> <br> <br> 
+      <button type="button" class="button" id="conditionBut" hidden="true" onclick="myOperation2()">Add </button>
+   </div >
+
+   <div id ="navigation2"class="sidenav">
+      <button class="dropdown-btn">Variable
+        <i class="fa fa-caret-down"></i> </button>
+      <div class="dropdown-container"> 
+        Name: <input type="text" id="name">
+        Value: <input type="text"id="value"> <br>
+        <br>
+        <button type="button" class="button"  onclick="draw()">draw</button>
+
+        <button type="button" class="button" id="saveVariable" onclick="saveDic(document.getElementById('name').value,document.getElementById('value').value) ;add(document.getElementById('name').value);clearr()">Save</button>
+      </div>
+      <a href= "#"data-shape="diamond"  class=" draw2d_droppable">Condition</a>
+      <a href="#about">Function</a>  
+      <button class="dropdown-btn">Arthimatic Operation
+      <i class="fa fa-caret-down"></i> </button>
+      <div class="dropdown-container">
+        <a href="#"data-shape="addition"   class=" draw2d_droppable">Addition</a>
+        <a href="#"data-shape="subtraction"     class=" draw2d_droppable">Subtraction</a>
+        <a href="#"data-shape="multiplication" class=" draw2d_droppable">Multiplication</a>
+        <a href="#"data-shape="division" class=" draw2d_droppable">Division</a>
+      </div>
+      <button class="dropdown-btn">Logical Operation
+       <i class="fa fa-caret-down"></i> </button>
+      <div class="dropdown-container">
+        <a href="#"data-shape="OR" class=" draw2d_droppable">OR</a>
+        <a href="#"data-shape="AND"class=" draw2d_droppable">AND</a>
+        <a href="#"data-shape="NOT"class=" draw2d_droppable">NOT</a>   
+      </div>
+      <button class="dropdown-btn">Search
+        <i class="fa fa-caret-down"></i> </button>
+      <div class="dropdown-container"> 
+         Name: <input type="text" id="nameS">
+         <label hidden="true" id="valueLabel">Value: </label>
+         <input type="text"id="valueS" hidden="true"> <br>
+         <br><button type="button" class="button" id="saveVariable" onclick="Search(document.getElementById('nameS').value)" >Search</button>
+      </div>
+      <a href="#"data-shape="start" class="draw2d_droppable" >Start</a>
+      <a href="#"data-shape="end" class=" draw2d_droppable">End</a>
+
+   
+    </div>
+    <script>
+      /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+      var dropdown = document.getElementsByClassName("dropdown-btn");
+      var i;
+      
+      for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var dropdownContent = this.nextElementSibling;
+        if (dropdownContent.style.display === "block") {
+        dropdownContent.style.display = "none";
+        } else {
+        dropdownContent.style.display = "block";
+        }
+        });
+      }
+      </script>
+      
+</body>
+</html>
