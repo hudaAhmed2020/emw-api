@@ -126,7 +126,6 @@ var DblClickCanvasPolicy = draw2d.policy.canvas.CanvasPolicy.extend({
             document.getElementById("var2text").hidden=false
             document.getElementById("var1text").hidden=false
             document.getElementById("resultBut").hidden=false
-            
             document.getElementById("conditionIn").hidden=true
             document.getElementById("conditionBut").hidden=true
             document.getElementById("CondLabel").hidden=true

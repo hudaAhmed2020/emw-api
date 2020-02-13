@@ -4,6 +4,21 @@ public class Shape {
     private long x;
     private long y;
     private String type;
+    private String id;
+    private Shape next;
+    private Shape previous;
+
+    public Shape getNext() {  return next; }
+
+    public void setNext(Shape next) { this.next = next; }
+
+    public Shape getPrevious() { return previous; }
+
+    public void setPrevious(Shape previous) { this.previous = previous; }
+
+    public String getId() { return id; }
+
+    public void setId(String id) { this.id = id; }
 
     public long getX() {
         return x;

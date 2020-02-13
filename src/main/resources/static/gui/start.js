@@ -5,9 +5,9 @@
 // Go to the Designer http://www.draw2d.org               
 // to design your own shape or download user generated    
 //                                                        
-var start = draw2d.SetFigure.extend({            
+var start = draw2d.SetFigure.extend({
 
-    NAME: "Start",
+    NAME: "start",
  
     init:function(attr, setter, getter)
     {

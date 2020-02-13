@@ -136,39 +136,156 @@ document.addEventListener("DOMContentLoaded",function () {
 
        function draw(){
 
-                var start = myfigure.cssClass
-        var end   = myfigure.outputPorts.data[0].connections.data[0].targetPort.cssClass
+            console.log(customCanvas)
+            var count =customCanvas.figures.data.length
+            console.log(count)
+            var figArray= new Array()
+             for(var i = 0; i<count ;i++ )
+            {
+                var tempShape = new Object()
+                var previous2= new Object()
+                var next2 = new Object()
+                tempShape.x= customCanvas.figures.data[i].x
+                tempShape.y= customCanvas.figures.data[i].y
+                tempShape.type= customCanvas.figures.data[i].cssClass
+                tempShape.id= customCanvas.figures.data[i].id
+                if(customCanvas.figures.data[i].cssClass==="start")
+                {
+                     previous2.type=null
+                     previous2.x=null
+                     previous2.y=null
+                     previous2.id="null"
+                }
+                else if(customCanvas.figures.data[i].inputPorts.data[0].connections.data.length!==0){
+                    console.log(customCanvas.figures.data[i].inputPorts.data[0].connections.data[0].sourcePort.parent.cssClass)
+                    previous2.type=customCanvas.figures.data[i].inputPorts.data[0].connections.data[0].sourcePort.parent.cssClass
+                    previous2.x=customCanvas.figures.data[i].inputPorts.data[0].connections.data[0].sourcePort.parent.x
+                    previous2.y=customCanvas.figures.data[i].inputPorts.data[0].connections.data[0].sourcePort.parent.y
+                    previous2.id=customCanvas.figures.data[i].inputPorts.data[0].connections.data[0].sourcePort.parent.id
 
-        // ...add it to the canvas 
-        canvas.add( start, myfigure.x,myfigure.y);
-        canvas.add( end, myfigure.outputPorts.data[0].connections.data[0].targetPort.x,myfigure.outputPorts.data[0].connections.data[0].targetPort.y);
-
-        // Create a Connection and connect the Start and End node
-        //
-        var c = new draw2d.Connection();
-
-        // Set the endpoint decorations for the connection
-        //
-        c.setSourceDecorator(new draw2d.decoration.connection.BarDecorator());
-        c.setTargetDecorator(new draw2d.decoration.connection.DiamondDecorator());   
-        // Connect the endpoints with the start and end port
-        //
-        c.setSource(start.getOutputPort(0));
-        c.setTarget(end.getInputPort(0));
-
-        // and finally add the connection to the canvas
-        canvas.add(c);
-
-       
-        // create a command for the undo/redo support
-        //var command = new draw2d.command.CommandAdd(this, figure, 100, 100);
-        //customCanvas.getCommandStack().execute(command);
-        
+                }
+                else{
+                     previous2.type=null
+                     previous2.x=null
+                     previous2.y=null
+                     previous2.id="null"
+                }
+                if(customCanvas.figures.data[i].cssClass==="end")
+                {
+                     next2.type=null
+                     next2.x=null
+                     next2.y=null
+                     next2.id="null"
+                }
+                else if(customCanvas.figures.data[i].outputPorts.data[0].connections.data.length!== 0){
+                    console.log(customCanvas.figures.data[i].outputPorts.data[0].connections.data[0].targetPort.parent.cssClass)
+                    next2.type=customCanvas.figures.data[i].outputPorts.data[0].connections.data[0].targetPort.parent.cssClass
+                    next2.x=customCanvas.figures.data[i].outputPorts.data[0].connections.data[0].targetPort.parent.x
+                    next2.y=customCanvas.figures.data[i].outputPorts.data[0].connections.data[0].targetPort.parent.y
+                    next2.id=customCanvas.figures.data[i].outputPorts.data[0].connections.data[0].targetPort.parent.id
+                }
+                else{
+                    next2.type=null
+                     next2.x=null
+                     next2.y=null
+                     next2.id="null"
+                }
+                tempShape.next=next2
+                tempShape.previous=previous2
+                figArray.push(tempShape)
+            }
+            console.log(figArray)
+            $.ajax({
+				type: "POST",
+				url: "/shape",
+				data: JSON.stringify(figArray),
+				success: success(),
+				contentType: "application/json",
+				dataType: 'json'
+			  });
 
        }
 
-        
-      </script>
+        function success(data){
+			console.log("good")
+
+		  }
+
+         function openn(){
+		  $.ajax({
+				type: "GET",
+				url: "/shape",
+				//data:JSON.stringify(shape),
+				success: getSuccess ,
+				contentType: "application/json",
+				//dataType: 'json'
+			  });
+		  }
+
+		  function getSuccess(data)
+            {
+              console.log("GET SUCCESS")
+			  console.log(data)
+				var i =0
+				var count=0
+				var count2=0
+				var size=0
+
+				while(data[count2].type!=="start")
+				{
+				    count2++
+				}
+				while(data[size]!==null)
+				{
+				    size++
+				}
+				var nextShape
+				for(var x = 0;x <size-1;x++)
+				{
+
+                    var count3=0
+				    if(count===0){
+                        var type = data[count2].type
+                        var figure = eval("new "+type+"();");
+                        customCanvas.add( figure, data[count2].x,data[count2].y);
+                        var type2=data[count2].next.type;
+                        nextShape=data[count2].next
+                        console.log(type);
+                        console.log(type2)
+                        var figure2=  eval("new "+type2+"();");
+                       customCanvas.add( figure2, data[count2].next.x,data[count2].next.y);
+                       count++;
+                   }
+                   else{
+                   figure=figure2
+                   while(nextShape.y!==data[count3].y||nextShape.x!==data[count3].x||nextShape.type!==data[count3].type)
+                   {
+                        count3++
+                   }
+
+                   nextShape=data[count3].next
+                   type2=data[count3].next.type
+                   var figure2 = eval("new "+type2+"();");
+                   customCanvas.add( figure2, nextShape.x,nextShape.y);
+                   console.log(type+"      ff   " +type2)
+                   }
+
+                    var c = new draw2d.Connection();
+                    c.setSourceDecorator(new draw2d.decoration.connection.BarDecorator());
+                    c.setTargetDecorator(new draw2d.decoration.connection.BarDecorator());
+                    c.setSource(figure.getOutputPort(0));
+                    c.setTarget(figure2.getInputPort(0));
+                    customCanvas.add(c);
+				    i++;
+
+				}
+}
+
+
+
+
+
+</script>
 
 </head>
 
@@ -206,9 +323,11 @@ document.addEventListener("DOMContentLoaded",function () {
         Name: <input type="text" id="name">
         Value: <input type="text"id="value"> <br>
         <br>
-        <button type="button" class="button"  onclick="draw()">draw</button>
+        <button type="button" class="button"  onclick="draw()">draw</button> <br>
+          <button type="button" class="button"  onclick="openn()">open</button>
 
-        <button type="button" class="button" id="saveVariable" onclick="saveDic(document.getElementById('name').value,document.getElementById('value').value) ;add(document.getElementById('name').value);clearr()">Save</button>
+
+          <button type="button" class="button" id="saveVariable" onclick="saveDic(document.getElementById('name').value,document.getElementById('value').value) ;add(document.getElementById('name').value);clearr()">Save</button>
       </div>
       <a href= "#"data-shape="diamond"  class=" draw2d_droppable">Condition</a>
       <a href="#about">Function</a>  
@@ -244,7 +363,7 @@ document.addEventListener("DOMContentLoaded",function () {
       /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
       var dropdown = document.getElementsByClassName("dropdown-btn");
       var i;
-      
+
       for (i = 0; i < dropdown.length; i++) {
         dropdown[i].addEventListener("click", function() {
         this.classList.toggle("active");
