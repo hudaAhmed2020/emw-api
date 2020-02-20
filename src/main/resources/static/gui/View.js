@@ -57,12 +57,12 @@ example.View = draw2d.Canvas.extend({
         var command = new draw2d.command.CommandAdd(this, figure, x, y);
         this.getCommandStack().execute(command);
         ///////////////
-        var shape={}
+       /* var shape={}
         shape.x=figure.x
         shape.y=figure.y
         shape.type=figure.cssClass
         shape2=shape
-        shapeArr.push(shape)
+        shapeArr.push(shape)*/
     }
     
     /* ,onDraw : function(type,x,y)

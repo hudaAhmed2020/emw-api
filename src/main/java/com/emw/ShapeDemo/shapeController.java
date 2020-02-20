@@ -15,27 +15,29 @@ import java.util.List;
 public class shapeController {
     //Shape[] temp = new Shape[100];
 
-    @GetMapping("/shape")
-    public  Shape[] getShape() {
-
-        Shape[] array= new Shape[100];
+    @GetMapping("/workflow")
+    public Workflow getShape() {
+       //Shape[] array = new Shape[100];
+        Workflow workflows= new Workflow();
         try {
             Gson gson = new Gson();
             Reader reader = Files.newBufferedReader(Paths.get("user.json"));
-            List<Shape> shapes = new Gson().fromJson(reader, new TypeToken<List<Shape>>() {}.getType());
-            array = shapes.toArray(new Shape[100]);
-            shapes.forEach(System.out::println);
+            //List<Shape> shapeList = new Gson().fromJson(reader, new TypeToken<List<Shape>>() {}.getType());
+            //array=shapeList.toArray(new Shape[100]);
+            workflows=new Gson().fromJson(reader,Workflow.class);
+            System.out.println(workflows);
             reader.close();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return array;
+        return workflows;
     }
-    @PostMapping("/shape")
-    public String saveShape(@RequestBody Shape[] shape) throws IOException {
+    @PostMapping("/workflow")
+    public String saveShape(@RequestBody Workflow x) throws IOException {
         try {
             Writer writer = new FileWriter("user.json");
-            new Gson().toJson(shape, writer);
+            System.out.println(x);
+            new Gson().toJson(x, writer);
             writer.close();
 
         } catch (Exception ex) {

@@ -12,6 +12,11 @@ function myOperation2(){
   document.getElementById("resultBut").hidden=true
   document.getElementById("conditionIn").hidden=false
   document.getElementById("conditionBut").hidden=false
+  document.getElementById("saveVariables").hidden=true
+    document.getElementById("varName").hidden= true
+    document.getElementById("varValue").hidden=true
+    document.getElementById("inpName").hidden=true
+    document.getElementById("inpValue").hidden=true
   myfigure.userData= document.getElementById("conditionIn").value
   myfigure.text= document.getElementById("conditionIn").value
   console.log("nada")
@@ -65,7 +70,7 @@ function myOperation(v1,v2,name1,name2)
           userDataDic[name1]=parseInt(v1)
           userDataDic[name2]=parseInt(v2)
            userDataDic["result"+counter]=temp
-          myfigure.userData=userDataDic
+          //myfigure.userData=userDataDic
           console.log(myfigure)
        }
 var DblClickCanvasPolicy = draw2d.policy.canvas.CanvasPolicy.extend({
@@ -101,11 +106,24 @@ var DblClickCanvasPolicy = draw2d.policy.canvas.CanvasPolicy.extend({
                document.getElementById("resultBut").hidden=true    
                document.getElementById("resLabel").hidden=true
                document.getElementById("resultIn").hidden=true
+               document.getElementById("saveVariables").hidden=true
+              document.getElementById("varName").hidden= true
+              document.getElementById("varValue").hidden=true
+              document.getElementById("inpName").hidden=true
+              document.getElementById("inpValue").hidden=true
                document.getElementById("conditionIn").hidden=false
                document.getElementById("conditionBut").hidden=false
                document.getElementById("CondLabel").hidden=false
 
                
+            }
+            else if (figure.cssClass==="start")
+            {
+            document.getElementById("saveVariables").hidden=false
+              document.getElementById("varName").hidden= false
+              document.getElementById("varValue").hidden=false
+              document.getElementById("inpName").hidden=false
+              document.getElementById("inpValue").hidden=false
             }
             else if(figure.cssClass==="NOT")
             {
@@ -116,6 +134,11 @@ var DblClickCanvasPolicy = draw2d.policy.canvas.CanvasPolicy.extend({
               document.getElementById("resultBut").hidden=false    
               document.getElementById("resLabel").hidden=true
               document.getElementById("resultIn").hidden=true
+             document.getElementById("saveVariables").hidden=true
+               document.getElementById("varName").hidden= true
+               document.getElementById("varValue").hidden=true
+               document.getElementById("inpName").hidden=true
+               document.getElementById("inpValue").hidden=true
               document.getElementById("conditionIn").hidden=true
               document.getElementById("conditionBut").hidden=true
               document.getElementById("CondLabel").hidden=true
@@ -128,10 +151,14 @@ var DblClickCanvasPolicy = draw2d.policy.canvas.CanvasPolicy.extend({
             document.getElementById("resultBut").hidden=false
             document.getElementById("conditionIn").hidden=true
             document.getElementById("conditionBut").hidden=true
+            document.getElementById("saveVariables").hidden=true
+              document.getElementById("varName").hidden= true
+              document.getElementById("varValue").hidden=true
+              document.getElementById("inpName").hidden=true
+              document.getElementById("inpValue").hidden=true
             document.getElementById("CondLabel").hidden=true
             }
 
-            figure.userData="hello";
             //alert(   JSON.stringify(figure.cssClass)   )
             myfigure=figure
            // console.log(figure.inputPorts.data[0].connections.data[0].sourcePort.parent.userData)
