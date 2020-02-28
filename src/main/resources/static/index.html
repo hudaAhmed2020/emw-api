@@ -44,6 +44,7 @@
 
     <script src="./gui/DoublyLinkedListNode.js"></script>
     <script src="./gui/DoublyLinkedList.js"></script>
+    <script src="./gui/GetAccountDetails.js"></script>
 
 
 
@@ -143,10 +144,21 @@ document.addEventListener("DOMContentLoaded",function () {
 
    <div  id="navigation" >
 
-       <label hidden="true" id="varName">Name: </label>
-       <input hidden="true" type="text"id="inpName"> <br>
-       <label hidden="true" id="varValue">Value: </label>
-       <input hidden="true" type="text"id="inpValue"> <br>
+       <label hidden="true" id="varName"> VarriableName: </label>
+       <input hidden="true" type="text"id="inpName">
+
+       <label hidden="true" id="var1Name"> MobileNumber: </label>
+       <input hidden="true" type="text"id="inp1Name"> <br>
+       <label hidden="true" id="var2Name"> Balance: </label>
+       <input hidden="true" type="text"id="inp2Name"> <br>
+       <label hidden="true" id="var3Name"> Date: </label>
+       <input hidden="true" type="date" id="inp3Name" name="trip-start"
+              value="2020-03-01"
+              min="2020-01-01" max="2020-12-31"> <br><br>
+       <button hidden="true"type="button" class="button" id="Save" >Save</button>
+
+       <!--label hidden="true" id="varValue">Value: </label>
+       <input hidden="true" type="text"id="inpValue"> <br-->
            <br>
        <button hidden="true"type="button" class="button" id="saveVariables" onclick="saveDic(document.getElementById('inpName').value,document.getElementById('inpValue').value) ;add(document.getElementById('inpName').value);clearr()">Save</button>
       <label hidden="true" id="var1Label">Variable1 </label>
@@ -172,7 +184,11 @@ document.addEventListener("DOMContentLoaded",function () {
 
 
       <a href= "#"data-shape="diamond"  class=" draw2d_droppable">Condition</a>
-      <a href="#about">Function</a>  
+       <button class="dropdown-btn">Functions
+           <i class="fa fa-caret-down"></i> </button>
+       <div class="dropdown-container">
+           <a href="#"data-shape="GetAccountDetails"   class=" draw2d_droppable">GetAccountDetails</a>
+       </div>
       <button class="dropdown-btn">Arthimatic Operation
       <i class="fa fa-caret-down"></i> </button>
       <div class="dropdown-container">

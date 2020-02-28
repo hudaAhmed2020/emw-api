@@ -48,6 +48,7 @@ example.Toolbar = Class.extend({
         		this.delimiter  = $("<span class='toolbar_delimiter'>&nbsp;</span>");
         		this.html.append(this.delimiter);
 
+
         		// Inject the DELETE Button
         		//
         		this.deleteButton  = $("<button>Delete</button>");
@@ -57,6 +58,7 @@ example.Toolbar = Class.extend({
         			var command= new draw2d.command.CommandDelete(node);
         			this.view.getCommandStack().execute(command);
         		},this)).button( "option", "disabled", true );
+
 
 		this.SaveButton  = $("<button>Save</button>");
         		this.html.append(this.SaveButton);

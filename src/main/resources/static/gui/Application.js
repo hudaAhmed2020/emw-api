@@ -44,6 +44,7 @@ example.Application = Class.extend(
 					resizeWhileDragging:true,
 					paneSelector: "#navigation",
 					size :200,
+					resizable:true,
 						
 				  }
 	       });

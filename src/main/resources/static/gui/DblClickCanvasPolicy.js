@@ -14,9 +14,9 @@ function myOperation2(){
   document.getElementById("conditionBut").hidden=false
   document.getElementById("saveVariables").hidden=true
     document.getElementById("varName").hidden= true
-    document.getElementById("varValue").hidden=true
+    //document.getElementById("varValue").hidden=true
     document.getElementById("inpName").hidden=true
-    document.getElementById("inpValue").hidden=true
+   // document.getElementById("inpValue").hidden=true
   myfigure.userData= document.getElementById("conditionIn").value
   myfigure.text= document.getElementById("conditionIn").value
   console.log("nada")
@@ -108,9 +108,9 @@ var DblClickCanvasPolicy = draw2d.policy.canvas.CanvasPolicy.extend({
                document.getElementById("resultIn").hidden=true
                document.getElementById("saveVariables").hidden=true
               document.getElementById("varName").hidden= true
-              document.getElementById("varValue").hidden=true
+              //document.getElementById("varValue").hidden=true
               document.getElementById("inpName").hidden=true
-              document.getElementById("inpValue").hidden=true
+              //document.getElementById("inpValue").hidden=true
                document.getElementById("conditionIn").hidden=false
                document.getElementById("conditionBut").hidden=false
                document.getElementById("CondLabel").hidden=false
@@ -121,9 +121,24 @@ var DblClickCanvasPolicy = draw2d.policy.canvas.CanvasPolicy.extend({
             {
             document.getElementById("saveVariables").hidden=false
               document.getElementById("varName").hidden= false
-              document.getElementById("varValue").hidden=false
+             // document.getElementById("varValue").hidden=false
               document.getElementById("inpName").hidden=false
-              document.getElementById("inpValue").hidden=false
+              //document.getElementById("inpValue").hidden=false
+
+
+
+            }
+            else if(figure.cssClass=="GetAccountDetails")
+            {
+                document.getElementById("var1Name").hidden= false
+                         // document.getElementById("varValue").hidden=false
+                          document.getElementById("inp1Name").hidden=false
+            document.getElementById("var2Name").hidden=false
+                              document.getElementById("var3Name").hidden=false
+                              document.getElementById("inp2Name").hidden=false
+                              document.getElementById("inp3Name").hidden=false
+            document.getElementById("Save").hidden=false
+
             }
             else if(figure.cssClass==="NOT")
             {
@@ -136,9 +151,9 @@ var DblClickCanvasPolicy = draw2d.policy.canvas.CanvasPolicy.extend({
               document.getElementById("resultIn").hidden=true
              document.getElementById("saveVariables").hidden=true
                document.getElementById("varName").hidden= true
-               document.getElementById("varValue").hidden=true
+               //document.getElementById("varValue").hidden=true
                document.getElementById("inpName").hidden=true
-               document.getElementById("inpValue").hidden=true
+              // document.getElementById("inpValue").hidden=true
               document.getElementById("conditionIn").hidden=true
               document.getElementById("conditionBut").hidden=true
               document.getElementById("CondLabel").hidden=true
@@ -153,9 +168,9 @@ var DblClickCanvasPolicy = draw2d.policy.canvas.CanvasPolicy.extend({
             document.getElementById("conditionBut").hidden=true
             document.getElementById("saveVariables").hidden=true
               document.getElementById("varName").hidden= true
-              document.getElementById("varValue").hidden=true
+             // document.getElementById("varValue").hidden=true
               document.getElementById("inpName").hidden=true
-              document.getElementById("inpValue").hidden=true
+             // document.getElementById("inpValue").hidden=true
             document.getElementById("CondLabel").hidden=true
             }
 
